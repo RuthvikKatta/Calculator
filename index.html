@@ -1,0 +1,224 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>Calculator by Katta Ruthvik</title> 
+    <style>
+        @font-face{
+            font-family: 'Scientific Calculator LCD';
+            src: url('../Fonts/ScientificCalculatorLcdRegular-Kn7X.ttf');
+        }
+        body{
+            background:linear-gradient( 95.2deg, rgba(173,252,234,1) 26.8%, rgba(192,229,246,1) 64% );
+            display: grid;
+            place-items: center;
+        }
+        #box{
+            display: flex;
+            position: relative;
+            width: 600px;
+            height: 100px;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            box-shadow: 0 5px 35px rgba(0, 0, 0,0.2); 
+            margin-bottom: 30px; 
+            margin-top: 20px;
+        }
+        #box::after
+        {
+            content: '';
+            position: absolute;
+            top: 7px;
+            left: 7px;
+            right: 7px;
+            bottom: 7px;
+            border-radius: 5px;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%,rgba(255,255,255,0.1) 15%, transparent 50%, transparent 85%,rgba(255,255,255,0.3) 100%);
+        } 
+        h1{  
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center; 
+            font-size: 40px;
+            color: #111215;  
+        }   
+        
+        .formstyle  
+        {
+            background-color:#111215 ;
+            width: 400px;  
+            height: 450px;  
+            margin: auto;   
+            border-radius: 10px;  
+            padding: 20px;  
+            box-shadow: 0px 20px 30px 0px #1d2122;
+        }  
+        
+        #blu,#red,#green{
+            background-color: rgb(36,166,153);
+        }
+
+        #red:hover{
+            background-color: rgb(249, 63, 63);
+        }
+
+        #green:hover{
+            background-color: rgb(66, 232, 66);
+        }
+
+        #br{
+            width:30px;
+        }
+
+        #btn:hover,#br:hover{
+            background-color: #343635;
+        }
+
+        input  
+        {  
+            width: 70px;  
+            height: 45px;
+            background-color: #1d2122;  
+            color: white;   
+            border-radius: 5px;    
+            margin: 3px;
+            margin-bottom: 10px;  
+            font-size: 20px;  
+            border: none;
+        } 
+
+        #disp{  
+            text-align: right;
+            font-family: 'Scientific Calculator LCD', sans-serif;   
+            width: 348px;  
+            border: 3px solid white; 
+            background-color: #8bae7c;
+            /* background-color: #111215; */
+            color: black; 
+            /* color: white; */
+            border-radius: 5px;  
+            padding: 20px;  
+            margin: auto;  
+        }
+        #disp:focus{
+            border: none;
+            outline: none;
+        }  
+    </style>
+    <script>
+        function backspace(calc) {                                            
+    size = calc.display.value.length;
+    calc.display.value = calc.display.value.substring(0, size-1);
+    }  
+
+    function sqrt(calc) {
+        calc.display.value = "Ans = "+ Math.sqrt(calc.display.value);
+    }
+
+    function cos(calc) {
+        calc.display.value ="Ans = "+ Math.cos(calc.display.value);
+    }
+
+    function sin(calc) {
+        calc.display.value = "Ans = "+Math.sin(calc.display.value);
+    }
+
+    function tan(calc) {
+        calc.display.value = "Ans = "+Math.tan(calc.display.value);
+    }
+
+    function log(form) {
+        form.display.value = "Ans = "+Math.log10(form.display.value);
+    }
+
+    function ln(form) {
+        form.display.value = "Ans = "+Math.log2(form.display.value);
+    }
+
+    function calculate(calc) {
+        if(calc.display.value.includes("!")) {
+                
+            size = calc.display.value.length;
+            n = Number(calc.display.value.substring(0, size-1));
+            f = 1;
+                
+            for(i = 2; i <= n; i++)
+                f = f*i;
+            calc.display.value = "Ans = "+f;
+        }
+        else if(calc.display.value.includes("%")) {
+                
+            size = calc.display.value.length;
+            n = Number(calc.display.value.substring(0, size-1));
+            calc.display.value = n/100;
+        }
+        else if(calc.display.value.includes("s")){
+            size = calc.display.value.length;
+            n = Number(calc.display.value.substring(0, size-1));
+            calc.display.value = "Ans  = "+n*n;
+        }
+        else   
+            calc.display.value = "Ans = "+eval(calc.display.value);
+    }
+    </script>
+</head>  
+<body>  
+    <div id="box"><h1>Calculator using HTML</h1></div>  
+    <div class= "formstyle">  
+        <form name = "calc">  
+            <!-- This input box shows the button pressed by the user in calculator. -->  
+            <input id="disp" name="display" onkeypress="return event.charCode >= 48&& event.charCode <= 57" type="text" placeholder="Calculate"> 
+            <br><br>
+            <!-- Display the calculator button on the screen. -->   
+            <input id="btn" type="button" value="cos" OnClick="cos(this.form)">
+            <input id="btn" type="button" value="sin" OnClick="sin(this.form)">
+            <input id="btn" type="button" value="tan" OnClick="tan(this.form)">
+            <input id="btn" type="button" value="log" OnClick="log(this.form)">
+            <input id="btn" type="button" value="ln" OnClick="ln(this.form)">
+                
+            <input id="btn" type="button" value="&#8730" OnClick="sqrt(this.form)">
+            <input id="btn" type="button" value="&#9633&sup2" OnClick="calc.display.value+='s'">
+            <input id="btn" type="button" value="^" OnClick="calc.display.value='Math.pow('">
+            <input id="btn" type="button" value="!" OnClick="calc.display.value+='!'">
+            <input id="green" type="button" value="=" OnClick="calculate(this.form)">
+                
+            <input id="btn" type="button" value="7" OnClick="calc.display.value+='7'">
+            <input id="btn" type="button" value="8" OnClick="calc.display.value+='8'">
+            <input id="btn" type="button" value="9" OnClick="calc.display.value+='9'">
+            <input id="red" type="button" value="&#8592" OnClick="backspace(this.form)">
+            <input id="blu" type="button" value="AC" OnClick="calc.display.value=' '">
+                
+            <input id="btn" type="button" value="4" OnClick="calc.display.value+='4'">
+            <input id="btn" type="button" value="5" OnClick="calc.display.value+='5'">
+            <input id="btn" type="button" value="6" OnClick="calc.display.value+='6'">
+            <input id="btn" type="button" value="&#215" OnClick="calc.display.value+='*'">
+            <input id="btn" type="button" value="&#247" OnClick="calc.display.value+='/'">
+                
+            <input id="btn" type="button" value="1" OnClick="calc.display.value+='1'">
+            <input id="btn" type="button" value="2" OnClick="calc.display.value+='2'">
+            <input id="btn" type="button" value="3" OnClick="calc.display.value+='3'">
+            <input id="btn" type="button" value="+" OnClick="calc.display.value+='+'">
+            <input id="btn" type="button" value="-" OnClick="calc.display.value+='-'">
+                
+            <input id="btn" type="button" value="." OnClick="calc.display.value+='.'">
+            <input id="btn" type="button" value="0" OnClick="calc.display.value+='0'">
+            <input id="btn" type="button" value="," OnClick="calc.display.value+=','">
+            <input id="btn" type="button" value="&#960" OnClick="calc.display.value+='Math.PI'">
+            <input id="br" type="button" value="(" OnClick="calc.display.value+='('">
+            <input id="br" type="button" value=")" OnClick="calc.display.value+=')'">
+        </form>  
+    </div>  
+</body>  
+</html>  
+
+<!-- 
+    How keys works
+
+    cos,sin,tan,log,ln,sqrt -- Give input number then press these keys the ans will be displayed in the display div.
+
+    square -- Give input and press the sqaure key then press "=" key the Ans wil be displayed.
+    
+    power(^) -- Press power(^) key then give input in (_,_) format then press "=" key the Ans wil be displayed.
+    
+    
+ -->
